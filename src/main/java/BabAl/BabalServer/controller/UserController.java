@@ -26,9 +26,4 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginDto dto) throws Exception {
         return ResponseEntity.ok().body(userService.login(dto));
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "ok";
-    }
 }

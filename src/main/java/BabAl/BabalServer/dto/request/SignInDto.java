@@ -1,6 +1,7 @@
 package BabAl.BabalServer.dto.request;
 
 import BabAl.BabalServer.domain.User;
+import BabAl.BabalServer.domain.enums.FoodCategoryName;
 import BabAl.BabalServer.domain.enums.UserGender;
 import BabAl.BabalServer.domain.enums.UserRole;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class SignInDto {
     private String gender;
     private int height;
     private int weight;
-    private List<String> foodCategory;
+    private List<FoodCategoryName> foodCategory;
     
     @Builder
     public User toEntity() {
@@ -38,6 +39,7 @@ public class SignInDto {
                 .height(height)
                 .weight(weight)
                 .bmr(0)
+                .foodCategoryNameList(foodCategory)
                 .role(UserRole.USER)
                 .build();
     }
