@@ -27,14 +27,14 @@ public class JwtUtil {
     }
 
     public static String getEmail(String token) {
-        String res = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token)
+        String res = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
                 .getBody().get("email", String.class);
         System.out.println("res: " + res);
         return res;
     }
 
     public static boolean isExpired(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token)
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
     }
 

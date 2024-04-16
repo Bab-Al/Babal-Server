@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -18,13 +20,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserService userService;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/login", "/user/signin").permitAll()
                         .anyRequest().authenticated());
         http
                 .sessionManagement((auth) -> auth
@@ -40,7 +45,7 @@ public class SecurityConfig {
         http
                 .httpBasic(AbstractHttpConfigurer::disable);
         http
-                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

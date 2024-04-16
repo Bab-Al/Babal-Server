@@ -6,6 +6,7 @@ import BabAl.BabalServer.domain.enums.UserRole;
 import BabAl.BabalServer.domain.mapping.UserFoodCategory;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,10 @@ public class User extends BaseEntity {
 
     public void addUserAuthority() {
         this.role = UserRole.USER;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
     }
 
 }
