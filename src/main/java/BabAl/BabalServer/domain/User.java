@@ -2,6 +2,7 @@ package BabAl.BabalServer.domain;
 
 import BabAl.BabalServer.domain.enums.UserGender;
 import BabAl.BabalServer.domain.common.BaseEntity;
+import BabAl.BabalServer.domain.enums.UserRole;
 import BabAl.BabalServer.domain.mapping.UserFoodCategory;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,5 +49,13 @@ public class User extends BaseEntity {
 
     // 기초대사량
     private int bmr;
+
+    // spring security role
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    public void addUserAuthority() {
+        this.role = UserRole.USER;
+    }
 
 }
