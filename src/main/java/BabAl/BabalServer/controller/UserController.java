@@ -1,5 +1,6 @@
 package BabAl.BabalServer.controller;
 
+import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignInDto;
 import BabAl.BabalServer.service.UserService;
@@ -17,13 +18,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signin")
-    @ResponseStatus(HttpStatus.OK)
-    public Long signIn(@Valid @RequestBody SignInDto dto) throws Exception {
-        return userService.signIn(dto);
+    public ApiResponse<Long> signIn(@Valid @RequestBody SignInDto dto) throws Exception {
+        return ApiResponse.onSuccess(userService.signIn(dto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto dto) throws Exception {
-        return ResponseEntity.ok().body(userService.login(dto));
+    public ApiResponse<String> login(@RequestBody LoginDto dto) throws Exception {
+        return ApiResponse.onSuccess(userService.login(dto));
     }
 }
