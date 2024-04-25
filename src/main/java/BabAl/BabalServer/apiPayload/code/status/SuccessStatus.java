@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public enum SuccessStatus implements BaseCode  {
+public enum SuccessStatus implements BaseCode {
 
     _OK(HttpStatus.OK, "200", "요청이 정상 처리되었습니다")
     ;
