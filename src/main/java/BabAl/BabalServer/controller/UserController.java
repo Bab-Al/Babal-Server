@@ -32,6 +32,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "로그인", description = "로그인 시 사용하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4004", description = "잘못된 비밀번호입니다", content = @Content(mediaType = "application/json"))
+    })
     public ApiResponse<String> login(@RequestBody LoginDto dto) throws Exception {
         return ApiResponse.onSuccess(userService.login(dto));
     }
