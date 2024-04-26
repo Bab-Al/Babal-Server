@@ -2,6 +2,22 @@ server:
   port: 9090
 
 spring:
-  profiles:
-    include: local, dev, prod
-    active: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        hbm2ddl:
+          auto: create-drop #update
+        default_batch_fetch_size: 1000
+logging.level:
+  org.hibernate.SQL: debug
+
+jwt:
+  secret: ${JWT_SECRET}
