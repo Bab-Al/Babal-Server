@@ -5,7 +5,7 @@ import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.dto.request.LoginDto;
-import BabAl.BabalServer.dto.request.SignInDto;
+import BabAl.BabalServer.dto.request.SignUpDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SuccessStatus signIn(SignInDto dto) {
+    public SuccessStatus signUp(SignUpDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new GeneralException(ErrorStatus.MEMBER_ALREADY_EXIST);
         }

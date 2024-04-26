@@ -2,10 +2,10 @@ package BabAl.BabalServer.service;
 
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.LoginDto;
-import BabAl.BabalServer.dto.request.SignInDto;
+import BabAl.BabalServer.dto.request.SignUpDto;
 
 public interface UserService {
 
-    SuccessStatus signIn(SignInDto dto);
+    SuccessStatus signUp(SignUpDto dto);
     String login(LoginDto dto);
 }
