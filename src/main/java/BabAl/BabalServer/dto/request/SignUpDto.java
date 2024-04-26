@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignInDto {
+public class SignUpDto {
     private String name;
     private String email;
     private String password;
