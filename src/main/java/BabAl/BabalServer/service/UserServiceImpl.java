@@ -6,6 +6,7 @@ import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
+import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
         return SuccessStatus._OK;
     }
 
-    public String login(LoginDto dto) {
+    public LoginResponseDto login(LoginDto dto) {
         Optional<User> savedUser = userRepository.findByEmail(dto.getEmail());
 
         if (savedUser.isPresent()) {
@@ -45,11 +46,13 @@ public class UserServiceImpl implements UserService {
                 throw new GeneralException(ErrorStatus.PASSWORD_NOT_MATCHING);
             }
             Long expiredMs = 1000 * 60 * 60L;
-            return JwtUtil.createJwt(dto.getEmail(), expiredMs);
+            String token = JwtUtil.createJwt(dto.getEmail(), expiredMs);
+
+            return LoginResponseDto.loginResponse(token);
         }
 
         // user not found exception
-        return String.valueOf(new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+        throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
     }
 
 }
