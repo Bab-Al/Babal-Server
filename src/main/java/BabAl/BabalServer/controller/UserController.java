@@ -4,12 +4,14 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
+import BabAl.BabalServer.dto.request.newPasswordDto;
 import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +42,10 @@ public class UserController {
     })
     public ApiResponse<LoginResponseDto> login(@RequestBody LoginDto dto) {
         return ApiResponse.onSuccess(userService.login(dto));
+    }
+
+    @PostMapping("/new-pw")
+    public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody newPasswordDto dto) throws Exception {
+        return ApiResponse.onSuccess(userService.sendNewPasswordEmail(dto));
     }
 }
