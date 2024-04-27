@@ -6,6 +6,7 @@ import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
+import BabAl.BabalServer.dto.request.changePasswordDto;
 import BabAl.BabalServer.dto.request.newPasswordDto;
 import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
@@ -84,6 +85,17 @@ public class UserServiceImpl implements UserService {
                 e.printStackTrace();
                 throw new MessagingException("이메일 전송 실패");
             }
+            return SuccessStatus._OK;
+        } else {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+    }
+
+    public SuccessStatus changePassword(String email, changePasswordDto dto) {
+
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            user.get().updatePassword(dto.getNewPassword());
             return SuccessStatus._OK;
         } else {
             throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
