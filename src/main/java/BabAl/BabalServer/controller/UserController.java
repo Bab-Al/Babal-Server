@@ -45,6 +45,10 @@ public class UserController {
     }
 
     @PostMapping("/new-pw")
+    @Operation(summary = "비밀번호 찾기", description = "로그인 전, 새로운 비밀번호 이메일로 전송하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
+    })
     public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody newPasswordDto dto) throws Exception {
         return ApiResponse.onSuccess(userService.sendNewPasswordEmail(dto));
     }
