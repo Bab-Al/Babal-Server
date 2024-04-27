@@ -90,6 +90,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public SuccessStatus signOut(String userEmail) {
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isPresent()) {
+            userRepository.deleteById(user.get().getId());
+            return SuccessStatus._OK;
+        } else {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+    }
+
     public String generateRandomPassword(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom random = new SecureRandom();
