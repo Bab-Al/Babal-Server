@@ -33,7 +33,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/", "/error", "/health").permitAll()
-                        .requestMatchers("/user/login", "/user/signup").permitAll()
+                        .requestMatchers("/user/login", "/user/signup", "/user/new-pw").permitAll()
                         .anyRequest().authenticated());
         http
                 .sessionManagement((auth) -> auth
