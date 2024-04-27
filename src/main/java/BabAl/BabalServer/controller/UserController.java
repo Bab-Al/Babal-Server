@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
+import BabAl.BabalServer.dto.request.changePasswordDto;
 import BabAl.BabalServer.dto.request.newPasswordDto;
 import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
@@ -52,6 +53,17 @@ public class UserController {
     })
     public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody newPasswordDto dto) throws Exception {
         return ApiResponse.onSuccess(userService.sendNewPasswordEmail(dto));
+    }
+
+    @PostMapping("/change-pw")
+    @Operation(summary = "비밀번호 변경", description = "로그인 후, 비밀번호 변경하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
+    })
+    public ApiResponse<SuccessStatus> changePassword(@RequestHeader("Authorization") String token,
+                                                     @Valid @RequestBody changePasswordDto dto) {
+        String userEmail = JwtUtil.getEmail(token.substring(7));
+        return ApiResponse.onSuccess(userService.changePassword(userEmail, dto));
     }
 
     @DeleteMapping("/signout")
