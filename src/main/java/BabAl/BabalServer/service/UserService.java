@@ -12,4 +12,5 @@ public interface UserService {
     SuccessStatus signUp(SignUpDto dto);
     LoginResponseDto login(LoginDto dto);
     SuccessStatus sendNewPasswordEmail(newPasswordDto dto) throws Exception;
+    SuccessStatus signOut(String userEmail);
 }
