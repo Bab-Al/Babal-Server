@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
+import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,7 +28,7 @@ public class UserController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "회원가입 요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4003", description = "이미 등록된 사용자입니다", content = @Content(mediaType = "application/json"))
     })
-    public ApiResponse<SuccessStatus> signUp(@Valid @RequestBody SignUpDto dto) throws Exception {
+    public ApiResponse<SuccessStatus> signUp(@Valid @RequestBody SignUpDto dto) {
         return ApiResponse.onSuccess(userService.signUp(dto));
     }
 
@@ -37,7 +38,7 @@ public class UserController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4004", description = "잘못된 비밀번호입니다", content = @Content(mediaType = "application/json"))
     })
-    public ApiResponse<String> login(@RequestBody LoginDto dto) throws Exception {
+    public ApiResponse<LoginResponseDto> login(@RequestBody LoginDto dto) {
         return ApiResponse.onSuccess(userService.login(dto));
     }
 }
