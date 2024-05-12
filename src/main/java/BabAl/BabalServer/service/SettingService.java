@@ -1,6 +1,7 @@
 package BabAl.BabalServer.service;
 
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
+import BabAl.BabalServer.dto.request.SettingFoodCategoryRequestDto;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
 import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
@@ -23,5 +24,8 @@ public interface SettingService {
 
     // 마이페이지 Edit Food Category 조회
     SettingFoodCategoryResponseDto getSettingFoodCategory(String userEmail);
+
+    // 마이페이지 Edit Food Category 수정
+    SuccessStatus setSettingFoodCategory(String userEmail, SettingFoodCategoryRequestDto dto);
 
 }

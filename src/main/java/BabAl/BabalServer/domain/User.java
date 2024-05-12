@@ -75,4 +75,8 @@ public class User extends BaseEntity {
         this.email = dto.getEmail();
     }
 
+    public void updateFoodCategory(List<FoodCategoryName> foodCategoryNameList) {
+        this.foodCategoryNameList = foodCategoryNameList;
+    }
+
 }

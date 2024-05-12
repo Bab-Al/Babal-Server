@@ -5,6 +5,7 @@ import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.domain.enums.FoodCategoryName;
+import BabAl.BabalServer.dto.request.SettingFoodCategoryRequestDto;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
 import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
@@ -98,5 +99,16 @@ public class SettingServiceImpl implements SettingService{
         }
     }
 
+    @Override
+    public SuccessStatus setSettingFoodCategory(String userEmail, SettingFoodCategoryRequestDto dto) {
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        } else {
+            user.get().updateFoodCategory(dto.getFoodCategory());
+            return SuccessStatus._OK;
+        }
+    }
 
 }
