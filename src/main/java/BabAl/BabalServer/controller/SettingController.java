@@ -1,6 +1,7 @@
 package BabAl.BabalServer.controller;
 
 import BabAl.BabalServer.apiPayload.ApiResponse;
+import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.service.SettingService;
@@ -23,7 +24,7 @@ public class SettingController {
     private final SettingService settingService;
 
     @GetMapping()
-    @Operation(summary = "마이페이지 조회", description = "마이페이지 조회 때 사용하는 API")
+    @Operation(summary = "마이페이지 조회", description = "마이페이지 조회 시 사용하는 API")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
@@ -31,5 +32,16 @@ public class SettingController {
     public ApiResponse<SettingResponseDto> getSetting(@RequestHeader("Authorization") String token) {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(settingService.getSetting(userEmail));
+    }
+
+    @GetMapping("/profile")
+    @Operation(summary = "마이페이지 Edit Profile 조회", description = "마이페이지에서 Profile 조회 시 사용하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
+    })
+    public ApiResponse<SettingProfileResponseDto> getSettingProfile(@RequestHeader("Authorization") String token) {
+        String userEmail = JwtUtil.getEmail(token.substring(7));
+        return ApiResponse.onSuccess(settingService.getSettingProfile(userEmail));
     }
 }

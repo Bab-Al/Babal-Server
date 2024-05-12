@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.code.status.ErrorStatus;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
+import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
 import BabAl.BabalServer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,16 @@ public class SettingServiceImpl implements SettingService{
         }
 
         return SettingResponseDto.settingResponse(user.get());
+    }
+
+    @Override
+    public SettingProfileResponseDto getSettingProfile(String userEmail) {
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+
+        return SettingProfileResponseDto.settingProfileResponse(user.get());
     }
 }
