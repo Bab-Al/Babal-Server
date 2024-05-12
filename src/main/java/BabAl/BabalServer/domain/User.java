@@ -4,6 +4,7 @@ import BabAl.BabalServer.domain.enums.FoodCategoryName;
 import BabAl.BabalServer.domain.enums.UserGender;
 import BabAl.BabalServer.domain.common.BaseEntity;
 import BabAl.BabalServer.domain.enums.UserRole;
+import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,6 +68,15 @@ public class User extends BaseEntity {
 
     public void updatePassword(String password) {
         this.password = password;
+    }
+
+    public void updateProfile(SettingProfileRequestDto dto){
+        this.name = dto.getUsername();
+        this.email = dto.getEmail();
+    }
+
+    public void updateFoodCategory(List<FoodCategoryName> foodCategoryNameList) {
+        this.foodCategoryNameList = foodCategoryNameList;
     }
 
 }

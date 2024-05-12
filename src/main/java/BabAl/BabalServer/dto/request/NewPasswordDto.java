@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class changePasswordDto {
-    private String newPassword;
+public class NewPasswordDto {
+    private String email;
 }
