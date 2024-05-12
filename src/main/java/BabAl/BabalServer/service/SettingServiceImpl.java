@@ -4,8 +4,10 @@ import BabAl.BabalServer.apiPayload.code.status.ErrorStatus;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
+import BabAl.BabalServer.domain.enums.FoodCategoryName;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
+import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
 import BabAl.BabalServer.repository.UserRepository;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,6 +83,18 @@ public class SettingServiceImpl implements SettingService{
             user.get().updatePassword(dto.getNewPassword());
             user.get().encodePassword(passwordEncoder);
             return SuccessStatus._OK;
+        }
+    }
+
+    @Override
+    public SettingFoodCategoryResponseDto getSettingFoodCategory(String userEmail) {
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        } else {
+            List<FoodCategoryName> foodCategoryList = user.get().getFoodCategoryNameList();
+            return SettingFoodCategoryResponseDto.settingFoodCategoryResponse(foodCategoryList);
         }
     }
 

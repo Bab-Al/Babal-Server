@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
+import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
@@ -70,6 +71,17 @@ public class SettingController {
                                                          @Valid @RequestBody SettingPasswordDto dto) {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(settingService.setSettingPassword(userEmail, dto));
+    }
+
+    @GetMapping("/foodCategory")
+    @Operation(summary = "마이페이지 Edit Food Category 조회", description = "마이페이지에서 선호하는 Food Category 조회 시 사용하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
+    })
+    public ApiResponse<SettingFoodCategoryResponseDto> getSettingFoodCategory(@RequestHeader("Authorization") String token) {
+        String userEmail = JwtUtil.getEmail(token.substring(7));
+        return ApiResponse.onSuccess(settingService.getSettingFoodCategory(userEmail));
     }
 
 }
