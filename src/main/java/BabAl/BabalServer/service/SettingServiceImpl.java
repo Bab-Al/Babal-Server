@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.code.status.ErrorStatus;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
+import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
@@ -56,4 +57,31 @@ public class SettingServiceImpl implements SettingService{
             throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
         }
     }
+
+    @Override
+    public SuccessStatus setSettingPassword(String userEmail, SettingPasswordDto dto) {
+
+        // 해당 사용자 유무 판별
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+
+        // 기존 비밀번호가 맞는지 판별
+        String savedPassword = user.get().getPassword();
+        if (!passwordEncoder.matches(dto.getPassword(), savedPassword)) {
+            throw new GeneralException(ErrorStatus.PASSWORD_NOT_MATCHING);
+        }
+
+        // new password = confirm password 인지 판별
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            throw new GeneralException(ErrorStatus.PASSWORD_CONFIRMATION_MISMATCH);
+        } else {
+            user.get().updatePassword(dto.getNewPassword());
+            user.get().encodePassword(passwordEncoder);
+            return SuccessStatus._OK;
+        }
+    }
+
+
 }

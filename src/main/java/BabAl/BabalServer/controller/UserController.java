@@ -4,8 +4,8 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
-import BabAl.BabalServer.dto.request.changePasswordDto;
-import BabAl.BabalServer.dto.request.newPasswordDto;
+import BabAl.BabalServer.dto.request.ChangePasswordDto;
+import BabAl.BabalServer.dto.request.NewPasswordDto;
 import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.service.UserService;
@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +50,7 @@ public class UserController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
     })
-    public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody newPasswordDto dto) throws Exception {
+    public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody NewPasswordDto dto) throws Exception {
         return ApiResponse.onSuccess(userService.sendNewPasswordEmail(dto));
     }
 
@@ -61,7 +60,7 @@ public class UserController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
     })
     public ApiResponse<SuccessStatus> changePassword(@RequestHeader("Authorization") String token,
-                                                     @Valid @RequestBody changePasswordDto dto) {
+                                                     @Valid @RequestBody ChangePasswordDto dto) {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(userService.changePassword(userEmail, dto));
     }

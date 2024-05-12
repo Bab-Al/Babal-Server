@@ -2,6 +2,7 @@ package BabAl.BabalServer.controller;
 
 import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
+import BabAl.BabalServer.dto.request.SettingPasswordDto;
 import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
@@ -56,4 +57,19 @@ public class SettingController {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(settingService.setSettingProfile(userEmail, dto));
     }
+
+    @PostMapping("/profile/new-pw")
+    @Operation(summary = "마이페이지에서 비밀번호 수정", description = "마이페이지에서 비밀번호 수정 시 사용하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4004", description = "기존 비밀번호가 아닙니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4005", description = "새 비밀번호와 확인 비밀번호가 맞지 않습니다", content = @Content(mediaType = "application/json"))
+    })
+    public ApiResponse<SuccessStatus> setSettingPassword(@RequestHeader("Authorization") String token,
+                                                         @Valid @RequestBody SettingPasswordDto dto) {
+        String userEmail = JwtUtil.getEmail(token.substring(7));
+        return ApiResponse.onSuccess(settingService.setSettingPassword(userEmail, dto));
+    }
+
 }

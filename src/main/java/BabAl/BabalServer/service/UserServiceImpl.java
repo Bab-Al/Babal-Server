@@ -6,8 +6,8 @@ import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.dto.request.LoginDto;
 import BabAl.BabalServer.dto.request.SignUpDto;
-import BabAl.BabalServer.dto.request.changePasswordDto;
-import BabAl.BabalServer.dto.request.newPasswordDto;
+import BabAl.BabalServer.dto.request.ChangePasswordDto;
+import BabAl.BabalServer.dto.request.NewPasswordDto;
 import BabAl.BabalServer.dto.response.LoginResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.repository.UserRepository;
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
     }
 
-    public SuccessStatus sendNewPasswordEmail(newPasswordDto dto) throws Exception {
+    public SuccessStatus sendNewPasswordEmail(NewPasswordDto dto) throws Exception {
 
         Optional<User> user = userRepository.findByEmail(dto.getEmail());
         if (user.isPresent()) {
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public SuccessStatus changePassword(String email, changePasswordDto dto) {
+    public SuccessStatus changePassword(String email, ChangePasswordDto dto) {
 
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
