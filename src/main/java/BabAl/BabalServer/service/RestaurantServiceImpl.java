@@ -3,7 +3,7 @@ package BabAl.BabalServer.service;
 import BabAl.BabalServer.apiPayload.code.status.ErrorStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
-import BabAl.BabalServer.dto.request.FlaskMenuRecommendationRequestDto;
+import BabAl.BabalServer.dto.request.FlaskMenuRecommendationDto;
 import BabAl.BabalServer.dto.response.MenuRecommendationResponseDto;
 import BabAl.BabalServer.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -41,7 +41,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         // flask 로 전송할 사용자 데이터 조회 + dto 세팅
-        FlaskMenuRecommendationRequestDto flaskRequestDto = FlaskMenuRecommendationRequestDto.flaskRequestDto(user.get());
+        FlaskMenuRecommendationDto flaskRequestDto = FlaskMenuRecommendationDto.flaskRequestDto(user.get());
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();

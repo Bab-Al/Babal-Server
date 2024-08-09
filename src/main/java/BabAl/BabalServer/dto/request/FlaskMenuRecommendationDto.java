@@ -1,7 +1,6 @@
 package BabAl.BabalServer.dto.request;
 
 import BabAl.BabalServer.domain.User;
-import BabAl.BabalServer.domain.enums.FoodCategoryName;
 import BabAl.BabalServer.domain.enums.UserGender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,12 +16,12 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlaskMenuRecommendationRequestDto {
+public class FlaskMenuRecommendationDto {
     private List<String> foodCategoryNameList;
     private String gender;
     private int age;
 
-    public static FlaskMenuRecommendationRequestDto flaskRequestDto(User user) {
+    public static FlaskMenuRecommendationDto flaskRequestDto(User user) {
         Map<String, String> categoryMapping = new HashMap<>();
         categoryMapping.put("FRUIT", "과일류");
         categoryMapping.put("SOUP","국 및 탕류");
@@ -52,7 +51,7 @@ public class FlaskMenuRecommendationRequestDto {
                 .map(name -> categoryMapping.getOrDefault(name, "빵 및 과자류"))
                 .collect(Collectors.toList());
 
-        return FlaskMenuRecommendationRequestDto.builder()
+        return FlaskMenuRecommendationDto.builder()
                 .foodCategoryNameList(switchCategoryNameToKorean)
                 .gender(enumToString(user.getGender(), user.getAge()))
                 .age(user.getAge())

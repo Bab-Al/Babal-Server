@@ -10,6 +10,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SettingFoodCategoryRequestDto {
+public class SettingFoodCategoryDto {
     private List<FoodCategoryName> foodCategory;
 }

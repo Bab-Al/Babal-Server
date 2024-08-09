@@ -2,9 +2,9 @@ package BabAl.BabalServer.controller;
 
 import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
-import BabAl.BabalServer.dto.request.SettingFoodCategoryRequestDto;
+import BabAl.BabalServer.dto.request.SettingFoodCategoryDto;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
-import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
+import BabAl.BabalServer.dto.request.SettingProfileDto;
 import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
@@ -55,7 +55,7 @@ public class SettingController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<SuccessStatus> setSettingProfile(@RequestHeader("Authorization") String token,
-                                                        @Valid @RequestBody SettingProfileRequestDto dto) {
+                                                        @Valid @RequestBody SettingProfileDto dto) {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(settingService.setSettingProfile(userEmail, dto));
     }
@@ -92,7 +92,7 @@ public class SettingController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<SuccessStatus> setSettingFoodCategory(@RequestHeader("Authorization") String token,
-                                                             @Valid @RequestBody SettingFoodCategoryRequestDto dto) {
+                                                             @Valid @RequestBody SettingFoodCategoryDto dto) {
         String userEmail = JwtUtil.getEmail(token.substring(7));
         return ApiResponse.onSuccess(settingService.setSettingFoodCategory(userEmail, dto));
     }

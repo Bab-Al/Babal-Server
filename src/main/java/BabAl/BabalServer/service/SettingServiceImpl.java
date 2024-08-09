@@ -5,9 +5,9 @@ import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.apiPayload.exception.GeneralException;
 import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.domain.enums.FoodCategoryName;
-import BabAl.BabalServer.dto.request.SettingFoodCategoryRequestDto;
+import BabAl.BabalServer.dto.request.SettingFoodCategoryDto;
 import BabAl.BabalServer.dto.request.SettingPasswordDto;
-import BabAl.BabalServer.dto.request.SettingProfileRequestDto;
+import BabAl.BabalServer.dto.request.SettingProfileDto;
 import BabAl.BabalServer.dto.response.SettingFoodCategoryResponseDto;
 import BabAl.BabalServer.dto.response.SettingProfileResponseDto;
 import BabAl.BabalServer.dto.response.SettingResponseDto;
@@ -51,7 +51,7 @@ public class SettingServiceImpl implements SettingService{
     }
 
     @Override
-    public SuccessStatus setSettingProfile(String userEmail, SettingProfileRequestDto dto) {
+    public SuccessStatus setSettingProfile(String userEmail, SettingProfileDto dto) {
 
         Optional<User> user = userRepository.findByEmail(userEmail);
         if (user.isPresent()) {
@@ -100,7 +100,7 @@ public class SettingServiceImpl implements SettingService{
     }
 
     @Override
-    public SuccessStatus setSettingFoodCategory(String userEmail, SettingFoodCategoryRequestDto dto) {
+    public SuccessStatus setSettingFoodCategory(String userEmail, SettingFoodCategoryDto dto) {
 
         Optional<User> user = userRepository.findByEmail(userEmail);
         if (user.isEmpty()) {
