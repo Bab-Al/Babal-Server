@@ -4,7 +4,6 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.AddMealDto;
 import BabAl.BabalServer.dto.response.MainHistoryResponseDto;
-import BabAl.BabalServer.dto.response.MainStatisticsResponseDto;
 import BabAl.BabalServer.dto.response.MainStatisticsResponseListDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.service.MainService;
