@@ -8,6 +8,7 @@ import BabAl.BabalServer.domain.User;
 import BabAl.BabalServer.dto.request.AddMealDto;
 import BabAl.BabalServer.dto.response.MainHistoryResponseDto;
 import BabAl.BabalServer.dto.response.MainStatisticsResponseDto;
+import BabAl.BabalServer.dto.response.MainStatisticsResponseListDto;
 import BabAl.BabalServer.repository.FoodRepository;
 import BabAl.BabalServer.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,7 +49,7 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public MainStatisticsResponseDto getStatistics(String userEmail, String startDate, String endDate) {
+    public MainStatisticsResponseListDto getStatistics(String userEmail, String startDate, String endDate) {
         // 사용자 존재 여부 확인
         User user = checkUser(userEmail);
 
@@ -55,9 +58,13 @@ public class MainServiceImpl implements MainService {
         LocalDate endLocalDate = LocalDate.parse(endDate);
 
         // 사용자 - 날짜에 해당하는 음식 통계 조회
-        // List<Food> foodList = foodRepository.findAllByUserAndCreatedAt(user)
+        List<Food> foodList = foodRepository.findAllByUserAndCreatedAtBetween(user, startLocalDate, endLocalDate);
+        List<MainStatisticsResponseDto> dtoList = MainStatisticsResponseDto.mainStatisticsResponse(foodList);
 
-        return null;
+        // 시작 날짜부터 끝 날짜까지 모든 날짜 리스트 생성
+        List<LocalDate> allDates = startLocalDate.datesUntil(endLocalDate.plusDays(1)).toList();
+
+        return MainStatisticsResponseListDto.mainStatisticsResponseList(dtoList, allDates);
     }
 
     public User checkUser(String userEmail) {

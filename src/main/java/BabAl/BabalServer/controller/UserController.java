@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입할 때 사용하는 API")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "회원가입 요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4003", description = "이미 등록된 사용자입니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<SuccessStatus> signUp(@Valid @RequestBody SignUpDto dto) {
@@ -38,6 +38,7 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "로그인", description = "로그인 시 사용하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4004", description = "잘못된 비밀번호입니다", content = @Content(mediaType = "application/json"))
     })
@@ -48,6 +49,7 @@ public class UserController {
     @PostMapping("/new-pw")
     @Operation(summary = "비밀번호 찾기", description = "로그인 전, 새로운 비밀번호 이메일로 전송하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
     })
     public ApiResponse<SuccessStatus> sendNewPasswordEmail(@Valid @RequestBody NewPasswordDto dto) throws Exception {
@@ -57,6 +59,7 @@ public class UserController {
     @PostMapping("/change-pw")
     @Operation(summary = "비밀번호 변경", description = "로그인 후, 비밀번호 변경하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
     })
     public ApiResponse<SuccessStatus> changePassword(@RequestHeader("Authorization") String token,
@@ -68,6 +71,7 @@ public class UserController {
     @DeleteMapping("/signout")
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴 시 사용하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json")),
     })
     public ApiResponse<SuccessStatus> signOut(@RequestHeader("Authorization") String token) {
