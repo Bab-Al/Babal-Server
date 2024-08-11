@@ -46,7 +46,17 @@ public class MainServiceImpl implements MainService {
     }
 
     @Override
-    public MainStatisticsResponseDto getStatistics(String userEmail) {
+    public MainStatisticsResponseDto getStatistics(String userEmail, String startDate, String endDate) {
+        // 사용자 존재 여부 확인
+        User user = checkUser(userEmail);
+
+        // 날짜 변환
+        LocalDate startLocalDate = LocalDate.parse(startDate);
+        LocalDate endLocalDate = LocalDate.parse(endDate);
+
+        // 사용자 - 날짜에 해당하는 음식 통계 조회
+        // List<Food> foodList = foodRepository.findAllByUserAndCreatedAt(user)
+
         return null;
     }
 
