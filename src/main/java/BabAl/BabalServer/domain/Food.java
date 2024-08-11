@@ -27,9 +27,6 @@ public class Food extends BaseEntity {
     @Column(length = 20)
     private String name;
 
-    // 음식 이미지 경로
-    private String imageUrl;
-
     // 탄수화물량
     private int carbohydrate;
 
@@ -38,4 +35,6 @@ public class Food extends BaseEntity {
 
     // 지방량
     private int fat;
+
+
 }

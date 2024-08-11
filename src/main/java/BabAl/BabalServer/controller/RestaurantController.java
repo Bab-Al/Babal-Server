@@ -28,7 +28,7 @@ public class RestaurantController {
     @GetMapping()
     @Operation(summary = "메뉴 추천", description = "메뉴 추천 결과 조회 시 사용하는 API")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "회원가입 요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4003", description = "이미 등록된 사용자입니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<List<MenuRecommendationResponseDto>> recommendMenu(@RequestHeader("Authorization") String token) throws JsonProcessingException {

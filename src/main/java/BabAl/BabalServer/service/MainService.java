@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.AddMealDto;
 import BabAl.BabalServer.dto.response.MainHistoryResponseDto;
 import BabAl.BabalServer.dto.response.MainStatisticsResponseDto;
+import BabAl.BabalServer.dto.response.MainStatisticsResponseListDto;
 
 public interface MainService {
 
@@ -14,5 +15,5 @@ public interface MainService {
     SuccessStatus addHistory(String userEmail, AddMealDto dto);
 
     // 식사 통계 조회
-    MainStatisticsResponseDto getStatistics(String userEmail, String startDate, String endDate);
+    MainStatisticsResponseListDto getStatistics(String userEmail, String startDate, String endDate);
 }

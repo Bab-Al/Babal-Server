@@ -4,7 +4,7 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.apiPayload.code.status.SuccessStatus;
 import BabAl.BabalServer.dto.request.AddMealDto;
 import BabAl.BabalServer.dto.response.MainHistoryResponseDto;
-import BabAl.BabalServer.dto.response.MainStatisticsResponseDto;
+import BabAl.BabalServer.dto.response.MainStatisticsResponseListDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +26,7 @@ public class MainController {
     @GetMapping("/history") // 식사 기록 조회
     @Operation(summary = "메인페이지-기록 조회", description = "식사 기록 조회할 때 사용하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<MainHistoryResponseDto> getHistory(@RequestHeader("Authorization") String token,
@@ -36,6 +37,7 @@ public class MainController {
     @PostMapping("/history") // 식사 기록 등록
     @Operation(summary = "메인페이지-기록 식사 등록", description = "식사 등록할 때 사용하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
     public ApiResponse<SuccessStatus> addHistory(@RequestHeader("Authorization") String token,
@@ -46,11 +48,12 @@ public class MainController {
     @GetMapping("/statistics") // 통계 조회
     @Operation(summary = "메인페이지-통계 조회", description = "통계 조회할 때 사용하는 API")
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
-    public ApiResponse<MainStatisticsResponseDto> getStatistics(@RequestHeader("Authorization") String token,
-                                                                @RequestParam("startDate") String startDate,
-                                                                @RequestParam("endDate") String endDate) {
+    public ApiResponse<MainStatisticsResponseListDto> getStatistics(@RequestHeader("Authorization") String token,
+                                                                    @RequestParam("startDate") String startDate,
+                                                                    @RequestParam("endDate") String endDate) {
         return ApiResponse.onSuccess(mainService.getStatistics(extractUserEmail(token), startDate, endDate));
     }
 

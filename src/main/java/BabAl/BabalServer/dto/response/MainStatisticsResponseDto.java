@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -19,13 +21,25 @@ public class MainStatisticsResponseDto {
     private int fat;
     private int kcal;
 
-    public static MainStatisticsResponseDto mainStatisticsResponse(Food food) {
+    public static List<MainStatisticsResponseDto> mainStatisticsResponse(List<Food> foodList) {
+        return foodList.stream()
+                .map(m -> MainStatisticsResponseDto.builder()
+                        .date(m.getCreatedAt())
+                        .carbohydrate(m.getCarbohydrate())
+                        .protein(m.getProtein())
+                        .fat(m.getFat())
+                        .kcal((m.getCarbohydrate() * 4) + (m.getProtein() * 4) + (m.getFat() * 9))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public static MainStatisticsResponseDto createWithDefaults(LocalDate date) {
         return MainStatisticsResponseDto.builder()
-                .date(food.getCreatedAt())
-                .carbohydrate(food.getCarbohydrate())
-                .protein(food.getProtein())
-                .fat(food.getFat())
-                .kcal((food.getCarbohydrate() * 4) + (food.getProtein() * 4) + (food.getFat() * 9))
+                .date(date)
+                .carbohydrate(0)
+                .protein(0)
+                .fat(0)
+                .kcal(0)
                 .build();
     }
 }

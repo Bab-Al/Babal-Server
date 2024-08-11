@@ -19,20 +19,16 @@ public class MainHistoryResponseDto {
     int userCarbo;
     int userProtein;
     int userFat;
-    String breakfastImage;
     String breakfastName;
     int breakfastKcal;
-    String lunchImage;
     String lunchName;
     int lunchKcal;
-    String dinnerImage;
     String dinnerName;
     int dinnerKcal;
 
     public static MainHistoryResponseDto mainHistoryResponse(User user, List<Food> foodList) {
         // 영양소 및 식사 정보 초기화 (저장된 기록이 없을 수도 있음)
         int totalCarbo = 0, totalProtein = 0, totalFat = 0, totalKcal = 0;
-        String breakfastImage = null, lunchImage = null, dinnerImage = null;
         String breakfastName = null, lunchName = null, dinnerName = null;
         int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0;
 
@@ -46,17 +42,14 @@ public class MainHistoryResponseDto {
             // 식사별로 나누어서 저장
             switch (food.getMealtime()) {
                 case BREAKFAST:
-                    breakfastImage = food.getImageUrl();
                     breakfastName = food.getName();
                     breakfastKcal += foodKcal;
                     break;
                 case LUNCH:
-                    lunchImage = food.getImageUrl();
                     lunchName = food.getName();
                     lunchKcal += foodKcal;
                     break;
                 case DINNER:
-                    dinnerImage = food.getImageUrl();
                     dinnerName = food.getName();
                     dinnerKcal += foodKcal;
                     break;
@@ -69,13 +62,10 @@ public class MainHistoryResponseDto {
                 .userCarbo(totalCarbo)
                 .userProtein(totalProtein)
                 .userFat(totalFat)
-                .breakfastImage(breakfastImage)
                 .breakfastName(breakfastName)
                 .breakfastKcal(breakfastKcal)
-                .lunchImage(lunchImage)
                 .lunchName(lunchName)
                 .lunchKcal(lunchKcal)
-                .dinnerImage(dinnerImage)
                 .dinnerName(dinnerName)
                 .dinnerKcal(dinnerKcal)
                 .build();
