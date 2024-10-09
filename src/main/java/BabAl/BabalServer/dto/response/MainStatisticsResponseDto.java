@@ -28,7 +28,7 @@ public class MainStatisticsResponseDto {
                         .carbohydrate(m.getCarbohydrate())
                         .protein(m.getProtein())
                         .fat(m.getFat())
-                        .kcal((m.getCarbohydrate() * 4) + (m.getProtein() * 4) + (m.getFat() * 9))
+                        .kcal(m.getCalories())
                         .build())
                 .collect(Collectors.toList());
     }
