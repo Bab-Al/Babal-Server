@@ -36,5 +36,6 @@ public class Food extends BaseEntity {
     // 지방량
     private int fat;
 
-
+    // 칼로리
+    private int calories;
 }

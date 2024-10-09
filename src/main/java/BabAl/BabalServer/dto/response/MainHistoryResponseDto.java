@@ -33,7 +33,7 @@ public class MainHistoryResponseDto {
         int breakfastKcal = 0, lunchKcal = 0, dinnerKcal = 0;
 
         for (Food food : foodList) {
-            int foodKcal = (food.getCarbohydrate() * 4) + (food.getProtein() * 4) + (food.getFat() * 9);
+            int foodKcal = food.getCalories(); //(food.getCarbohydrate() * 4) + (food.getProtein() * 4) + (food.getFat() * 9);
             totalCarbo += food.getCarbohydrate();
             totalProtein += food.getProtein();
             totalFat += food.getFat();
