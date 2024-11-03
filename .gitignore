@@ -40,3 +40,4 @@ out/
 **/application.properties
 
 /venv/
+/RecBole_Sys/dataset/Food/
