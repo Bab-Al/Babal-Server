@@ -2,13 +2,20 @@ import argparse
 import torch
 import numpy as np
 import pandas as pd
+import shutil
+import os
 
 from recbole.quick_start import load_data_and_model
+
+# module.py 덮어쓰기
+source_path = "module.py"
+target_path = os.path.join(torch.__path__[0], "nn/modules/module.py")
+shutil.copyfile(source_path, target_path)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_path', '-m', type=str, default='saved/model.pth', help='name of models')
-    # python RecBole-GNN/run_inference.py --model_path=saved/NGCF-Oct-16-2024_19-14-27.pth 로 실행
+    # python RecBole_Sys/RecBole-GNN/run_inference.py --model_path=RecBole_Sys/saved/NGCF-Oct-16-2024_19-14-27.pth 로 실행
     # C:\Users\alsrud\Downloads\Babal-Server\Babal-Server\RecBole\saved\NGCF-Oct-16-2024_19-14-27.pth
 
     args, _ = parser.parse_known_args()
@@ -27,7 +34,7 @@ if __name__ == '__main__':
     matrix = dataset.inter_matrix(form='csr')
 
     # 특정 사용자의 아이템 ID
-    liked_item_id = 1  # 예시: 사용자가 좋아하는 아이템 ID
+    liked_item_id = 2  # 예시: 사용자가 좋아하는 아이템 ID
 
     # 사용자가 좋아하는 아이템을 좋아하는 사용자 ID 찾기
     users_who_liked_item = matrix[:, liked_item_id].nonzero()[0]
@@ -75,5 +82,5 @@ if __name__ == '__main__':
         final_results.append((original_user_seq, item))
 
     final_dataframe = pd.DataFrame(final_results, columns=["user", "recommended_item"])
-    final_dataframe.to_csv('saved/recommendation.csv', index=False)
+    final_dataframe.to_csv('RecBole_Sys/saved/recommendation.csv', index=False)
     print('Recommendations saved to CSV!')
