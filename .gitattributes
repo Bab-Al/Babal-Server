@@ -1,1 +1,2 @@
 RecBole_Sys/saved/NGCF-Oct-16-2024_19-14-27.pth filter=lfs diff=lfs merge=lfs -text
+dataset/Food/* filter=lfs diff=lfs merge=lfs -text
