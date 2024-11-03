@@ -8,7 +8,7 @@ import os
 from recbole.quick_start import load_data_and_model
 
 # module.py 덮어쓰기
-source_path = "module.py"
+source_path = "/content/Babal-Server/module.py" # colab 경로
 target_path = os.path.join(torch.__path__[0], "nn/modules/module.py")
 shutil.copyfile(source_path, target_path)
 
