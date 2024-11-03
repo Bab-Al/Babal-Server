@@ -17,6 +17,7 @@ public class AddMealDto {
     private int carbohydrate;
     private int protein;
     private int fat;
+    private int calories;
     private String foodName;
 
     @Builder
@@ -28,6 +29,7 @@ public class AddMealDto {
                 .carbohydrate(carbohydrate)
                 .protein(protein)
                 .fat(fat)
+                .calories(calories)
                 .build();
     }
 }
