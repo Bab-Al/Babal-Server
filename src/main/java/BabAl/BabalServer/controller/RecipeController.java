@@ -22,7 +22,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @GetMapping() // 레시피 재료 검색
+    @GetMapping("/ingredients") // 레시피 재료 검색
     @Operation(summary = "레시피 재료 검색", description = "레시피 재료 검색할 때 사용하는 API")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
