@@ -61,7 +61,7 @@ if __name__ == '__main__':
     final_result = []
 
     # 각 사용자에 대해 상위 N개의 추천 아이템 추출
-    top_n = 5
+    top_n = 1
     for user in users_who_liked_item:
         # 사용자의 상호작용한 아이템 인덱스 가져오기
         interacted_indices = matrix[user].indices  # 해당 사용자의 상호작용한 아이템 인덱스
