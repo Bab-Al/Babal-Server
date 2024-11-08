@@ -15,6 +15,7 @@ shutil.copyfile(source_path, target_path)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_path', '-m', type=str, default='saved/model.pth', help='name of models')
+    parser.add_argument('--item_id', '-i', type=int, required=True, help='item ID for recommendation')
     # python RecBole_Sys/RecBole-GNN/run_inference.py --model_path=RecBole_Sys/saved/NGCF-Oct-16-2024_19-14-27.pth 로 실행
     # C:\Users\alsrud\Downloads\Babal-Server\Babal-Server\RecBole\saved\NGCF-Oct-16-2024_19-14-27.pth
 
@@ -34,7 +35,7 @@ if __name__ == '__main__':
     matrix = dataset.inter_matrix(form='csr')
 
     # 특정 사용자의 아이템 ID
-    liked_item_id = 2  # 예시: 사용자가 좋아하는 아이템 ID
+    liked_item_id = args.item_id  # 예시: 사용자가 좋아하는 아이템 ID
 
     # 사용자가 좋아하는 아이템을 좋아하는 사용자 ID 찾기
     users_who_liked_item = matrix[:, liked_item_id].nonzero()[0]
