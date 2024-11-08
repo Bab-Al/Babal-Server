@@ -52,6 +52,15 @@ public class User extends BaseEntity {
     // 기초대사량
     private int bmr;
 
+    // 원하는 음식 태그
+    @ElementCollection
+    @CollectionTable(
+            name = "recipe_tag", // 별도의 테이블명
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "tag")
+    private List<String> tagList;
+
     // 음식 카테고리
     @ElementCollection
     @Enumerated(EnumType.STRING)
