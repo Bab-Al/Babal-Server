@@ -14,6 +14,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +41,8 @@ public class RecipeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER4001", description = "사용자가 없습니다", content = @Content(mediaType = "application/json"))
     })
-    public ApiResponse<RecipeRecommendationsResponseDto> getRecommendations(@RequestHeader("Authorization") String token,
-                                                                            @Valid @RequestBody RecipeRecommendationsDto dto) throws JsonProcessingException {
+    public ApiResponse<List<RecipeRecommendationsResponseDto>> getRecommendations(@RequestHeader("Authorization") String token,
+                                                                                  @Valid @RequestBody RecipeRecommendationsDto dto) throws JsonProcessingException {
         return  ApiResponse.onSuccess(recipeService.getRecommendations(extractUserEmail(token), dto));
     }
 

@@ -13,5 +13,5 @@ public interface RecipeService {
     RecipeIngredientsResponseDto getIngredients(String alpha) throws JsonProcessingException;
 
     // 레시피 추천
-    RecipeRecommendationsResponseDto getRecommendations(String userEmail, RecipeRecommendationsDto ingredients) throws JsonProcessingException;
+    List<RecipeRecommendationsResponseDto> getRecommendations(String userEmail, RecipeRecommendationsDto ingredients) throws JsonProcessingException;
 }
