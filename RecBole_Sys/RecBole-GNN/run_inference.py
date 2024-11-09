@@ -10,15 +10,13 @@ from recbole.quick_start import load_data_and_model
 if __name__ == '__main__':
 
     # module.py 덮어쓰기
-    source_path = "/content/Babal-Server/module.py" # colab 경로
+    source_path = "module.py"  # "/content/Babal-Server/module.py" # colab 경로
     target_path = os.path.join(torch.__path__[0], "nn/modules/module.py")
     shutil.copyfile(source_path, target_path)
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_path', '-m', type=str, default='saved/model.pth', help='name of models')
     parser.add_argument('--item_id', '-i', type=int, required=True, help='item ID for recommendation')
-    # python RecBole_Sys/RecBole-GNN/run_inference.py --model_path=RecBole_Sys/saved/NGCF-Oct-16-2024_19-14-27.pth 로 실행
-    # C:\Users\alsrud\Downloads\Babal-Server\Babal-Server\RecBole\saved\NGCF-Oct-16-2024_19-14-27.pth
 
     args, _ = parser.parse_known_args()
 
@@ -35,54 +33,46 @@ if __name__ == '__main__':
     # user-item sparse matrix
     matrix = dataset.inter_matrix(form='csr')
 
-    # 특정 사용자의 아이템 ID
-    liked_item_id = args.item_id  # 예시: 사용자가 좋아하는 아이템 ID
-
-    # 사용자가 좋아하는 아이템을 좋아하는 사용자 ID 찾기
-    users_who_liked_item = matrix[:, liked_item_id].nonzero()[0]
+    # 특정 사용자가 평가한 아이템
+    liked_item_id = args.item_id
+    users_who_liked_item = matrix[:, liked_item_id].nonzero()[0]  # 특정 아이템을 평가한 사용자 ID 찾기
 
     # 예측할 사용자 ID 및 아이템 ID 설정
-    user_ids = users_who_liked_item
     all_item_ids = np.arange(len(item_id2token))  # 모든 아이템 ID
 
-    # 사용자-아이템 상호작용 객체 생성
-    interaction = {
-        'user_id': torch.tensor(user_ids).to(device),
-        'item_id': torch.tensor(all_item_ids).to(device)
-    }
-
     model.eval()
-    # 모델을 사용해 추론
-    scores = model.full_sort_predict(interaction)
+    top_n = 10
+    recommendations = []  # 추천 결과를 저장할 리스트
 
-    # 예측 결과 처리
-    rating_pred = scores.cpu().data.numpy()  # 1차원 배열로 예상 점수 가져오기
-
-    final_result = []
-
-    # 각 사용자에 대해 상위 N개의 추천 아이템 추출
-    top_n = 1
     for user in users_who_liked_item:
-        # 사용자의 상호작용한 아이템 인덱스 가져오기
+        # 각 사용자별 상호작용한 아이템 인덱스 가져오기
         interacted_indices = matrix[user].indices  # 해당 사용자의 상호작용한 아이템 인덱스
-        rating_pred[interacted_indices] = 0  # 이미 좋아하는 아이템의 점수 0으로 설정
+        interaction = {
+            'user_id': torch.tensor([user]).to(device),
+            'item_id': torch.tensor(all_item_ids).to(device)
+        }
 
-        # 상위 N개의 추천 아이템 인덱스 추출
-        recommended_item_indices = np.argsort(rating_pred)[-top_n:][::-1]
+        # 모델 추론
+        scores = model.full_sort_predict(interaction).cpu().data.numpy()
+        scores[liked_item_id] = 0  # 사용자가 이미 평가한 아이템 점수 0으로 설정
 
+        # 상위 N개 아이템 추천
+        recommended_item_indices = np.argsort(scores)[-top_n:][::-1]
         for item_index in recommended_item_indices:
-            # 추천된 아이템이 유효한지 확인
             if item_index < len(item_id2token):
-                # 추천된 아이템의 실제 ID 가져오기
-                original_item_seq = item_id2token[item_index]
-                final_result.append((user, original_item_seq))
+                recommendations.append((item_id2token[item_index], scores[item_index]))  # 아이템 ID와 점수 저장
 
-    # 추천 결과를 DataFrame으로 변환하고 CSV 파일로 저장
-    final_results = []
-    for user, item in final_result:
-        original_user_seq = user_id2token[user]
-        final_results.append((original_user_seq, item))
+    # 추천 점수 기준 상위 아이템 정렬 및 상위 아이템 출력
+    sorted_recommendations = sorted(recommendations, key=lambda x: x[1], reverse=True)
+    final_item = sorted_recommendations[0] if sorted_recommendations else None
 
-    final_dataframe = pd.DataFrame(final_results, columns=["user", "recommended_item"])
+    # 추천 아이템이 있을 경우 해당 아이템을 CSV로 저장, 없을 경우 빈 CSV 생성
+    if final_item:
+        final_item_id = final_item[0]  # 점수를 제외하고 ID만 가져오기
+        final_dataframe = pd.DataFrame([[final_item_id]], columns=["recommended_item"])
+    else:
+        final_dataframe = pd.DataFrame(columns=["recommended_item"])  # 빈 데이터프레임 생성
+
+    # CSV 저장
     final_dataframe.to_csv('RecBole_Sys/saved/recommendation.csv', index=False)
-    print('Recommendations saved to CSV!')
+    print('Recommendation saved to CSV! (파일 생성 완료)')
