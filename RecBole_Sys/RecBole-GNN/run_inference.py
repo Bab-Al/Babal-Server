@@ -17,6 +17,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_path', '-m', type=str, default='saved/model.pth', help='name of models')
     parser.add_argument('--item_id', '-i', type=int, required=True, help='item ID for recommendation')
+    # python RecBole_Sys/RecBole-GNN/run_inference.py --model_path=RecBole_Sys/saved/NGCF-Oct-16-2024_19-14-27.pth --item_id='38'
 
     args, _ = parser.parse_known_args()
 
