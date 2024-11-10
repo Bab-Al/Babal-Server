@@ -16,7 +16,7 @@ public class RecipeRecommendationResponse {
     private float protein;
     private float fat;
     private int n_steps;
-    private String steps;
+    private List<String> steps;
     private int n_ingredients;
     private List<String> ingredients;
 }
