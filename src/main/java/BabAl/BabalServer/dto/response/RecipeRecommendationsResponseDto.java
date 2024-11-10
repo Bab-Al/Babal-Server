@@ -21,7 +21,7 @@ public class RecipeRecommendationsResponseDto {
     private int n_ingredients;
     private List<String> ingredients;
 
-    public static RecipeRecommendationsResponseDto recipeRecommendationsResponse(RecipeRecommendationResponse dto, List<String> stepList) {
+    public static RecipeRecommendationsResponseDto recipeRecommendationsResponse(RecipeRecommendationResponse dto) {
         return RecipeRecommendationsResponseDto.builder()
                 .name(dto.getName())
                 .minutes(dto.getMinutes())
@@ -30,7 +30,7 @@ public class RecipeRecommendationsResponseDto {
                 .protein(dto.getProtein())
                 .fat(dto.getFat())
                 .n_steps(dto.getN_steps())
-                .steps(stepList)
+                .steps(dto.getSteps())
                 .n_ingredients(dto.getN_ingredients())
                 .ingredients(dto.getIngredients())
                 .build();
