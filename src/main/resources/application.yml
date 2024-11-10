@@ -31,4 +31,7 @@ jwt:
   secret: ${JWT_SECRET}
 
 flask:
-  url: ${FLASK_URL}
+  url:
+    rec: ${FLASK_URL_REC}
+    search: ${FLASK_URL_SEARCH}
+    recommendation: ${FLASK_URL_RECOMMENDATION}

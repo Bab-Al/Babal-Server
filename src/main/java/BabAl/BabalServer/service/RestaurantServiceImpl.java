@@ -29,7 +29,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper; // 데이터를 JSON 객체로 변환
 
-    @Value("${flask.url}")
+    @Value("${flask.url.rec}")
     private String flaskUrl;
 
     @Override
