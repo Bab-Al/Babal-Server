@@ -59,8 +59,8 @@ public class RecipeServiceImpl implements  RecipeService {
             // CSV 파일 읽기
             Set<String> allIngredients = new HashSet<>();
             try (CSVReader csvReader = new CSVReader(new FileReader("RAW_recipes.csv"))) {
-                List<String[]> records = csvReader.readAll();
-                for (String[] record : records) {
+                String[] record;
+                while ((record = csvReader.readNext()) != null) {
                     String ingredientList = record[10];
                     List<String> ingredients = Arrays.asList(ingredientList.replaceAll("[\\[\\]']", "").split(", "));
 
