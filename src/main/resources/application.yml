@@ -33,5 +33,7 @@ jwt:
 flask:
   url:
     rec: ${FLASK_URL_REC}
-    search: ${FLASK_URL_SEARCH}
     recommendation: ${FLASK_URL_RECOMMENDATION}
+
+s3:
+  recipe: ${S3_RECIPE_CSV}
