@@ -51,6 +51,9 @@ dependencies {
 
 	// Jython
 	implementation 'org.python:jython-slim:2.7.4rc1'
+
+	// opencsv
+	implementation 'com.opencsv:opencsv:5.9'
 }
 
 tasks.named('test') {
