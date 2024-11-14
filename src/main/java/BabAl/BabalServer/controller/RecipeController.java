@@ -4,6 +4,7 @@ import BabAl.BabalServer.apiPayload.ApiResponse;
 import BabAl.BabalServer.dto.request.RecipeRecommendationsDto;
 import BabAl.BabalServer.dto.response.RecipeIngredientsResponseDto;
 import BabAl.BabalServer.dto.response.RecipeRecommendationsResponseDto;
+import BabAl.BabalServer.dto.response.RecipeTagsResponseDto;
 import BabAl.BabalServer.jwt.JwtUtil;
 import BabAl.BabalServer.service.RecipeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,6 +34,15 @@ public class RecipeController {
     })
     public ApiResponse<RecipeIngredientsResponseDto> getIngredients(@RequestParam String alpha) throws JsonProcessingException {
         return ApiResponse.onSuccess(recipeService.getIngredients(alpha));
+    }
+
+    @GetMapping("/tags") // 레시피 태그 검색
+    @Operation(summary = "레시피 태그 검색", description = "레시피 태그 검색할 때 사용하는 API")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "요청이 정상 처리되었습니다", content = @Content(mediaType = "application/json")),
+    })
+    public ApiResponse<RecipeTagsResponseDto> getTags(@RequestParam String alpha) throws JsonProcessingException {
+        return ApiResponse.onSuccess(recipeService.getTags(alpha));
     }
 
     @PostMapping("/recommendation") // 재료를 입력하면 사용자 프로필과 재료로 레시피 추천

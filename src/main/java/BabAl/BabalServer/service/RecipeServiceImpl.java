@@ -8,6 +8,7 @@ import BabAl.BabalServer.dto.flaskResponse.RecipeRecommendationResponse;
 import BabAl.BabalServer.dto.request.RecipeRecommendationsDto;
 import BabAl.BabalServer.dto.response.RecipeIngredientsResponseDto;
 import BabAl.BabalServer.dto.response.RecipeRecommendationsResponseDto;
+import BabAl.BabalServer.dto.response.RecipeTagsResponseDto;
 import BabAl.BabalServer.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -48,7 +49,7 @@ public class RecipeServiceImpl implements  RecipeService {
     @Value("${s3.recipe}")
     private String recipeUrl;
 
-    // 레시피 검색
+    // 레시피 재료 검색
     @Override
     public RecipeIngredientsResponseDto getIngredients(String alpha) {
         String alphabet = alpha.toLowerCase();
@@ -81,6 +82,46 @@ public class RecipeServiceImpl implements  RecipeService {
 
             // DTO에 결과를 담아 반환
             RecipeIngredientsResponseDto responseDto = new RecipeIngredientsResponseDto(filteredIngredients.size(), filteredIngredients);
+            return responseDto;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 레시피 태그 검색
+    @Override
+    public RecipeTagsResponseDto getTags(String alpha) throws JsonProcessingException {
+        String alphabet = alpha.toLowerCase();
+
+        try {
+            checkFile(recipeUrl, "RAW_recipes.csv");
+
+            // CSV 파일 읽기
+            Set<String> allTags = new HashSet<>();
+            try (CSVReader csvReader = new CSVReader(new FileReader("RAW_recipes.csv"))) {
+                String[] record;
+                while ((record = csvReader.readNext()) != null) {
+                    String tagList = record[5];
+                    List<String> tags = Arrays.asList(tagList.replaceAll("[\\[\\]']", "").split(", "));
+
+                    // alpha로 시작하는 재료만 추가
+                    for (String tag : tags) {
+                        if (tag.toLowerCase().startsWith(alphabet)) {
+                            allTags.add(tag);
+                        }
+                    }
+                }
+            } catch (CsvException e) {
+                throw new RuntimeException(e);
+            }
+
+            // 필터링된 재료를 정렬
+            List<String> filteredTags = new ArrayList<>(allTags);
+            Collections.sort(filteredTags);
+
+            // DTO에 결과를 담아 반환
+            RecipeTagsResponseDto responseDto = new RecipeTagsResponseDto(filteredTags.size(), filteredTags);
             return responseDto;
 
         } catch (IOException e) {
