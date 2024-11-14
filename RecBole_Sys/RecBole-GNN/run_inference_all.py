@@ -33,13 +33,14 @@ if __name__ == '__main__':
 
     # 예측할 모든 아이템 ID 오름차순 정렬 후 상위 _개 추출
     all_item_ids = np.arange(len(item_id2token))
-    sorted_item_ids = np.sort(all_item_ids)[:10000]
 
     model.eval()
-    top_n = 1  # 각 아이템에 대해 1개의 추천 아이템만 추출
+    top_n = 1
     recommendations = []  # 추천 결과를 저장할 리스트
 
-    for item_id in sorted_item_ids:  # 상위 _개의 아이템에 대해 추천 생성
+    for item_id in all_item_ids:
+        print(f"{item_id + 1}/{len(item_id2token)}", end='\r', flush=True)  # \r로 동일 줄에 출력
+
         users_who_liked_item = matrix[:, item_id].nonzero()[0]  # 특정 아이템을 평가한 사용자 ID 찾기
 
         # 각 사용자별 상호작용한 아이템 인덱스 가져오기
