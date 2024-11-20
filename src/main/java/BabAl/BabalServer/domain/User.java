@@ -70,6 +70,9 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    // rasberry pi camera module mac address
+    private String cameraAddress;
+
     public void addUserAuthority() {
         this.role = UserRole.USER;
     }
@@ -91,4 +94,7 @@ public class User extends BaseEntity {
         this.foodCategoryNameList = foodCategoryNameList;
     }
 
+    public void updateCameraAddress(String address) {
+        this.cameraAddress = address;
+    }
 }

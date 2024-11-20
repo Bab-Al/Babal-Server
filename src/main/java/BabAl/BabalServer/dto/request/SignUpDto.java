@@ -48,6 +48,7 @@ public class SignUpDto {
                 .bmr(calculatedBmr)
                 .foodCategoryNameList(foodCategory)
                 .role(UserRole.USER)
+                .cameraAddress(null)
                 .build();
     }
 
