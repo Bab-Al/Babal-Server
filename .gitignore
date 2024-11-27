@@ -40,5 +40,9 @@ out/
 **/application.properties
 
 /venv/
-/RecBole_Sys/dataset/Food/
+
+# S3
+RAW_recipes.csv
+
+/RecBole_Sys/
 /log/

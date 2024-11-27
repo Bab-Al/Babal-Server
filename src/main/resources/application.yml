@@ -31,4 +31,9 @@ jwt:
   secret: ${JWT_SECRET}
 
 flask:
-  url: ${FLASK_URL}
+  url:
+    rec: ${FLASK_URL_REC}
+    recommendation: ${FLASK_URL_RECOMMENDATION}
+
+s3:
+  recipe: ${S3_RECIPE_CSV}
