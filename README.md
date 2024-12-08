@@ -24,6 +24,38 @@
 
 <br>
 
+## 🕹️ Tech Stack
+- **Core Dependencies**
+  - `spring-boot-starter-data-jpa`
+  - `spring-boot-starter-web`
+  - `spring-boot-starter-test`
+  - `spring-boot-starter-validation`
+  - `lombok`
+
+- **Database**
+  - `mysql-connector-java:8.0.33`
+
+- **Security & Authentication**
+  - `spring-boot-starter-security`
+  - `jjwt-api:0.11.5`
+  - `jjwt-impl:0.11.5`
+  - `jjwt-jackson:0.11.5`
+
+- **API Documentation**
+  - `springdoc-openapi-starter-webmvc-ui:2.0.2`
+
+- **Email**
+  - `spring-boot-starter-mail`
+
+- **Entity Management**
+  - `javassist:3.15.0-GA`
+
+- **External Libraries**
+  - `opencsv:5.9`
+  - `jython-slim:2.7.4rc1`
+
+<br>
+
 ## 🎭 TroubleShooting
 <details>
 <summary><b>🍽️ Improve accuracy and increase diversity of recommendations</b></summary>
