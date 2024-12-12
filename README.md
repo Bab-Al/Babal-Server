@@ -90,7 +90,7 @@
 <details>
 <summary><b>📜 Requirements Installation</b></summary>
   
-> **Problem** : After I clone the RecBole framework to use in Spring Boot, the torch installation fails while executing the command 'pipe install -e. --verbose'.
+> **Problem** : After I clone the RecBole framework to use in Spring Boot, the torch installation fails while executing the command 'pip install -e. --verbose'.
 >
 > **Solution** : The Python version should be between 3.8 and 3.10, the Python and Pip versions must match, and the installed Python should be 64-bit.
 >
